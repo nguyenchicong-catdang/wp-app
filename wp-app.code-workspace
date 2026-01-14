@@ -8,6 +8,10 @@
 			"name": "APP PROJECT",
 			"path": "."
 		},
+		{
+			"name": "->> WP SSR PROJECT",
+			"path": "./wp-ssr"
+		},
 	],
 	"settings": {}
 }
