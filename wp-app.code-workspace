@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "DOCUMENT",
+			"path": "./../document"
+		},
+		{
+			"name": "APP PROJECT",
+			"path": "."
+		},
+	],
+	"settings": {}
+}
