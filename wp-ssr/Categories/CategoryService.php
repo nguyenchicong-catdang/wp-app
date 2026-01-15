@@ -19,7 +19,7 @@ class CategoryService
         $category = Category::slug($slug)
             ->with(['term', 'posts']) // Gom chung vào một mảng
             ->firstOrFail();
-        dd($category->posts);
+        // dd($category->posts);
         return $category;
     }
 }
