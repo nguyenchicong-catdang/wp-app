@@ -24,5 +24,7 @@ class WpServiceProvider extends ServiceProvider
     {
         // routes wwp
         $this->loadRoutesFrom(__DIR__.'/routesWp.php');
+        // page views
+        $this->loadViewsFrom(__DIR__.'/pages', 'wp-page');
     }
 }

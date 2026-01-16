@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// pages
+Route::get('/', fn()=> view('wp-page::index'))->name('wp-index');
+
 Route::get('/posts/{slug}', [\Wp\Posts\PostController::class, 'show'])->name('wp-post');
 
 Route::get('/categories', [\Wp\Categories\CategoryController::class, 'index'])->name('wp-categories');
