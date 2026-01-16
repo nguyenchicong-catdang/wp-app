@@ -7,6 +7,7 @@ class CategoryService
     public function index()
     {
         // $categories = Category::all();
+        
         return Category::with('term')->get();
         // return $categories;
     }
