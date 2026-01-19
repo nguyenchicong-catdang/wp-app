@@ -9,3 +9,6 @@
 > ls -l /home/cong/git/wp-app/wordpress/wp-content/plugins/
 
 > unlink /home/cong/git/wp-app/wordpress/wp-content/plugins/laravel-sidebar-manager
+
+## laravel-manager
+ln -s /home/cong/git/wp-app/wp-plugin/laravel-manager /home/cong/git/wp-app/wordpress/wp-content/plugins/
