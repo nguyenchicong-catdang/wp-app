@@ -54,7 +54,10 @@ function render_sidebar_settings()
                 <tr>
                     <th scope="row">URL Liên kết</th>
                     <td>
-                        <input type="url" name="sidebar_url"
+                        <!-- <input type="url" name="sidebar_url" -->
+                         <!-- Xử lý text url -->
+                            <input type="text" name="sidebar_url"
+
                             value="<?php echo esc_attr(get_option('sidebar_url')); ?>"
                             class="regular-text" />
                     </td>
@@ -97,3 +100,40 @@ function notify_redis_on_sidebar_update()
         }
     }
 }
+
+// Hàm thực hiện xóa dữ liệu
+function laravel_sidebar_cleanup_options()
+{
+    delete_option('sidebar_name');
+    delete_option('sidebar_url');
+    delete_option('sidebar_html_content');
+
+    // // Nếu muốn xóa luôn cache Redis khi gỡ plugin
+    if (function_exists('notify_redis_on_sidebar_update')) {
+        notify_redis_on_sidebar_update();
+    }
+}
+
+// Đăng ký hook khi Deactivate
+register_deactivation_hook(__FILE__, 'laravel_sidebar_cleanup_options');
+
+/**
+ * File này chỉ để VS Code nhận diện class Redis, không chạy thực tế.
+ * Cách xóa khi "Uninstall" (Xóa hẳn Plugin - Khuyên dùng)
+ 
+<?php
+// Nếu không phải lệnh uninstall từ WordPress thì thoát
+if (!defined('WP_UNINSTALL_PLUGIN')) {
+    exit;
+}
+
+// Xóa các key trong bảng wp_options
+delete_option('sidebar_name');
+delete_option('sidebar_url');
+delete_option('sidebar_html_content');
+
+// (Tùy chọn) Xóa sạch trong database nếu bạn dùng nhiều options hơn
+// global $wpdb;
+// $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE 'sidebar_%'");
+
+ */

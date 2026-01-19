@@ -12,6 +12,10 @@
 			"name": "->> WP SSR PROJECT",
 			"path": "./wp-ssr"
 		},
+		{
+			"name": "->> ->> WP Plugin PROJECT",
+			"path": "./wp-plugin"
+		},
 	],
 	"settings": {}
 }
