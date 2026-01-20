@@ -12,11 +12,24 @@ add_action('admin_post_save_laravel_sidebar_content', function () {
     }
 
     // 2. Lấy và xử lý dữ liệu (Upsert)
+    // Trong file xử lý lưu dữ liệu của bạn
     if (isset($_POST['laravel_sidebar_html'])) {
-        // wp_unslash để tránh việc HTML bị thêm các dấu gạch chéo ngược (\)
         $raw_html = wp_unslash($_POST['laravel_sidebar_html']);
-        // Lọc mã độc nhưng vẫn giữ lại HTML an toàn
-        $safe_html = wp_kses_post($raw_html);
+
+        // Bước 1: Loại bỏ hoàn toàn thẻ <script> và nội dung bên trong nó
+        $clean_html = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $raw_html);
+
+        // Bước 2: Loại bỏ các thuộc tính sự kiện nguy hiểm (onerror, onclick, onload, v.v.)
+        // Đây là cách chặn mã độc như <img src="x" onerror="alert(1)">
+        $clean_html = preg_replace('#\son[a-z]+=["\'].*?["\']#is', '', $clean_html);
+
+        // Bước 3: Loại bỏ các giao thức javascript: trong thuộc tính href
+        $clean_html = preg_replace('#href=["\']javascript:.*?["\']#is', 'href="#"', $clean_html);
+
+        // Bước 4: Sử dụng wp_kses_post để làm sạch theo chuẩn WordPress
+        $safe_html = wp_kses_post($clean_html);
+
+        // Lưu vào database
         update_option('sidebar_html_content', $safe_html);
     }
 

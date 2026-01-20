@@ -13,6 +13,10 @@
 			"path": "./wp-ssr"
 		},
 		{
+			"name": "->> ->> Vite SCSS PROJECT",
+			"path": "./vite-ssr"
+		},
+		{
 			"name": "->> ->> WP Plugin PROJECT",
 			"path": "./wp-plugin"
 		},

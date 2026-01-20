@@ -13,6 +13,8 @@ class SidebarGetData
         //https://github.com/corcel/corcel
         // $siteUrl = Option::get('siteurl');
         $data = $sidebar::get($optionsName);
+        // Trong SidebarGetData.php
+        $data = strip_tags($data, '<ul><li><a>'); // Chỉ cho phép các thẻ HTML an toàn.
         return [
             'content' => $data,
         ];
