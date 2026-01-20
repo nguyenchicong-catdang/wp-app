@@ -1,4 +1,5 @@
-@dd($data)
+{{-- @dd($data) --}}
 <aside>
-    <h2>Sidebar</h2>
+    <h3>Sidebar Laravel</h3>
+    {!! $data->content !!}
 </aside>
