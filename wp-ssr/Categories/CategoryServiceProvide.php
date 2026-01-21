@@ -11,6 +11,6 @@ class CategoryServiceProvide extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         //
-        $this->loadViewsFrom(__DIR__ . '/blade', 'wp-category');
+        $this->loadViewsFrom(__DIR__ . '/../pages', 'wp-category');
     }
 }

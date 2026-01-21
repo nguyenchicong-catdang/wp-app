@@ -20,8 +20,10 @@ class CategoryService
         // dd($category);
         // $category = Category::with('term')->slug($slug)->with('posts')->firstOrFail();
         $category = Category::slug($slug)
-            ->with(['term', 'posts']) // Gom chung vào một mảng
-            ->firstOrFail();
+            ->with(['term',
+             'posts',
+                'posts.thumbnail.attachment' // Thêm chuỗi này để bắt hết dữ liệu ảnh trong 1 lần]) // Gom chung vào một mảng
+                  ])->firstOrFail();
         // dd($category->posts);
         return $category;
     }
