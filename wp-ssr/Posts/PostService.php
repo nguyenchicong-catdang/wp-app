@@ -6,7 +6,9 @@ class PostService
 {
     public function show($slug)
     {
-        $post = Post::published()->where('post_name', $slug)->firstOrFail();
+        $post = Post::published()->where('post_name', $slug)
+            ->with(['thumbnail.attachment'])
+            ->firstOrFail();
         return $post;
     }
 }

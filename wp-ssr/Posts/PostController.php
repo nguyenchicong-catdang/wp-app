@@ -21,8 +21,8 @@ class PostController extends \App\Http\Controllers\Controller
     {
         $post = $service->show($slug);
         // Ép kiểu (object) để biến mảng thành stdClass
-        $data = (object) PostResource::make($post)->resolve();
+        $data = PostResource::make($post)->resolve();
         // $data = PostResource::make($post)->resolve();
-        return view('wp-posts::post', ['post' => $data]);
+        return view('wp-posts::post', ['post' => (object) $data]);
     }
 }
