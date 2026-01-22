@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Post</title>
-</head>
-<body>
-    <x-wp-layout::header />
-    <main>
-        <x-wp-layout::sidebar />
+<x-wp-layout::layout title="{{ $post->title }}" :breadcrumbs="$post->breadcrumbs">
+    {{-- title --}}
+    {{-- <x-slot:title>{{ $post->title }}</x-slot:title> --}}
+    {{-- Laravel sẽ lấy mảng từ hàm getBreadcrumbsAttribute ở trên --}}
+    {{-- <x-slot:breadcrumbs>{{ $post->breadcrumbs }}</x-slot:breadcrumbs> --}}
+    {{-- <x-wp-layout::breadcrumbs :data="$post->breadcrumbs" /> --}}
         <div class="content">
             @php debug($post); @endphp
             @if ($post)
@@ -21,6 +15,4 @@
                 <div>{!! $post->content !!}</div>
             @endif
         </div>
-    </main>
-</body>
-</html>
+</x-wp-layout::layout>

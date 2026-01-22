@@ -16,6 +16,8 @@ class PostResource extends \Illuminate\Http\Resources\Json\JsonResource
             'updated_at' => $this->post_modified->format('d-m-Y'),
             'thumbnail_url' => $this->thumbnail?->attachment?->url,
             'thumbnail_alt' => $this->thumbnail?->attachment?->alt,
+            'breadcrumbs' => $this->cached_breadcrumb ? json_decode($this->cached_breadcrumb, true) : []
+            // 'breadcrumbs' => $this->cached_breadcrumb,
         ];
     }
 }

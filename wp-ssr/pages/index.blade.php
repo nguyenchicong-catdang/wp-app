@@ -20,6 +20,7 @@
 <body>
     <x-wp-layout::header />
     <main>
+        <x-wp-layout::breadcrumbs />
         <x-wp-layout::sidebar />
     </main>
 </body>

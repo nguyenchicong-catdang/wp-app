@@ -9,4 +9,6 @@
 
 > cd ~/git/wp-app && php artisan serve
 
+> cd ~/git/wp-app && composer run dev
+
 > cd ~/git/wp-app && git branch -a

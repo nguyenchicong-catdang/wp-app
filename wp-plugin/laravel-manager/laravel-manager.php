@@ -125,3 +125,5 @@ add_filter('script_loader_tag', function ($tag, $handle, $src) {
 
 // crud sidebar html content
 require_once plugin_dir_path(__FILE__) . 'php-actions/laravel-sidebar.php';
+// crud breadcrumb
+require_once plugin_dir_path(__FILE__) . 'php-actions/laravel-breadcrumb.php';
