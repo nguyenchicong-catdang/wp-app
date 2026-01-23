@@ -4,8 +4,7 @@
     "type": "module",
     "scripts": {
         "dev-vite-ssr": "cd wp-ssr && vite",
-        "build-vite-ssr": "cd wp-ssr && vite build",
-        "build": "npm run build-vite-ssr",
+        "build": "vite build",
         "dev": "npm run dev-vite-ssr"
     },
     "devDependencies": {

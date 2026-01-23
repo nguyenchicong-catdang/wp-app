@@ -7,23 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
     {{-- Import CSS/JS tập trung tại đây --}}
-    @vite(['scss/main.scss', 'js/main.js'], 'vite-ssr-dist')
+    {{-- @vite(['main.scss', 'main.js'], 'vite-ssr-dist') --}}
+        @vite(['main.js'], 'vite-ssr-dist')
+
     @stack('styles')
 </head>
 <body>
-    <x-wp-layout::header />
-    {{-- Truyền Breadcrumbs vào --}}
-    <x-wp-layout::breadcrumbs :data="$breadcrumbs" />
-    <main class="container">
-        <div class="row">
-            
-            {{-- Vùng Sidebar dùng chung --}}
-                <x-wp-layout::sidebar />
-            {{-- Vùng hiển thị nội dung chính --}}
-                {{ $slot }}
+    <x-wp-views::headers.header />
+    <main>
+        <x-wp-namespace::sidebar />
+        <div class="content">
+            {{ $slot }}
         </div>
     </main>
-
-    @stack('scripts')
 </body>
 </html>

@@ -1,4 +1,4 @@
 {{-- Components/views/headers/header.blade.php --}}
 <header>
-    header.blade.php
+    /headers/header.blade.php
 </header>

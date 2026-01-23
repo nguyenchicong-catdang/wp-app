@@ -3,26 +3,30 @@
 namespace Wp\Components;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
-class ComponentServiceProvider extends \Illuminate\Support\ServiceProvider
+class ComponentServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        // Đăng ký namespace cho Class
-        Blade::componentNamespace('Wp\\Components', 'wp-layout');
+        // 1. Đăng ký namespace cho Class
+        Blade::componentNamespace('Wp\\Components\\Namespace', 'wp-namespace');
 
-        // Đăng ký đường dẫn View
-        // __DIR__ . '/views' sẽ trỏ đúng vào thư mục views nằm cùng cấp với file này
-        $this->loadViewsFrom(__DIR__ . '/views', 'wp-layout');
+        // // 2. Đăng ký đường dẫn View
+        $this->loadViewsFrom(__DIR__ . '/Namespace/views-namespace', 'wp-namespace');
 
-        // // 2. Đăng ký hàng loạt Anonymous Components bằng mảng
-        $components = [
-            'layout-header' => __DIR__ . '/Layout/Headers',
-            // Thêm các component khác tại đây
-        ];
+        // Đổi 'wp-layout' thành 'wp-views' để tránh trùng tên với namespace phía trên
+        Blade::anonymousComponentPath(__DIR__ . '/views', 'wp-views');
+        $this->loadViewsFrom(__DIR__ . '/views', 'wp-views');
 
-        foreach ($components as $prifix => $path) {
-            Blade::anonymousComponentPath($path, $prifix);
-        }
+        // 3. Đăng ký hàng loạt Anonymous Components
+        // $components = [
+        //     'layout-header' => __DIR__ . '/Layout/Headers',
+        //     // Thêm các component khác tại đây
+        // ];
+
+        // foreach ($components as $prefix => $path) {
+        //     Blade::anonymousComponentPath($path, $prefix);
+        // }
     }
 }
