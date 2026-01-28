@@ -1,3 +1,81 @@
-.laravel-sidebar {
-    background-color: red;
+/* Container chính */
+#containerSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+/* Style cho từng item */
+.draggable-item {
+    background-color: #ffffff;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: grab;
+    user-select: none;
+    position: relative;
+    /* Mặc định tính toán padding dựa trên level */
+    padding-left: calc(var(--indent-level) * 30px + 15px); 
+    transition: padding-left 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+                background-color 0.2s, 
+                transform 0.1s;
+}
+
+/* KHI ĐANG BỊ NẮM KÉO: Ép padding về 0 để sát lề */
+.draggable-item.dragging {
+    opacity: 0.4;
+    background-color: #e9ecef;
+    border: 1px solid #007bff;
+    /* Reset padding quan trọng ở đây */
+    padding-left: 15px !important; 
+    /* transform: scale(0.98); */
+}
+
+/* Đường kẻ phân cấp bên trái */
+.draggable-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+}
+
+/* Hiệu ứng khi kéo vật khác đè lên */
+.draggable-item.drag-over-active {
+    border: 2px solid #007bff !important;
+    background-color: #e7f3ff;
+    z-index: 10;
+}
+
+.draggable-item.drag-over-active::before {
+    background: #007bff;
+}
+
+.draggable-item:hover:not(.dragging) {
+    border-color: #666;
+    background-color: #f0f7ff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.draggable-item h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    pointer-events: none; /* Tránh nhiễu sự kiện drag từ text */
+}
+
+/* Placeholder khi danh sách trống */
+#containerSidebar p {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
 }
