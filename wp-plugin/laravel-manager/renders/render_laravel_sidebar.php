@@ -1,16 +1,22 @@
 <?php
 // laravel-manager/renders/render_laravel_sidebar.php
+require_once ROOT_LARAVEL_PATH . 'laravel-manager/actions/action_update_laravel_sidebar.php';
+
 if (!function_exists('render_laravel_sidebar')) {
-    function render_laravel_sidebar() {
+    function render_laravel_sidebar()
+    {
         // // load date categories
         // require_once ROOT_LARAVEL_PATH . 'laravel-manager/loaders/loader_categories.php';
         require_once ROOT_LARAVEL_PATH . 'laravel-manager/views/view_laravel_sidebar.php';
+        // action
+        // require_once ROOT_LARAVEL_PATH . 'laravel-manager/actions/action_update_laravel_sidebar.php';
     }
 }
 
 // asset laravel sidebar
 if (!function_exists('asset_laravel_sidebar')) {
-    function asset_laravel_sidebar($hook) {
+    function asset_laravel_sidebar($hook)
+    {
         //echo $hook;
         if ($hook !== 'laravel-manager_page_laravel-sidebar') return;
 
@@ -32,10 +38,12 @@ if (!function_exists('asset_laravel_sidebar')) {
             // true
         );
 
-        // load date categories
+        // load data categories
         require_once ROOT_LARAVEL_PATH . 'laravel-manager/loaders/loader_categories.php';
         // Lấy data để truyền sang JS
         // $categories = get_categories();
+        // load data current categories (data laravel sidebar )
+        require_once ROOT_LARAVEL_PATH . 'laravel-manager/loaders/loader_current_categories.php';
     }
 }
 

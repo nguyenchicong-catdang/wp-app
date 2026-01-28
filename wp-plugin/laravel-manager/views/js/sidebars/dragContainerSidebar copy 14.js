@@ -1,5 +1,5 @@
 import { renderContainerSidebar } from "./renderContainerSidebar.js";
-import { updateDataCurrentCategories } from "./dataLoaderSidebar.js";
+
 const levelColors = [
     "#dee2e6",
     "#007bff",
@@ -89,7 +89,6 @@ function dragContainerSidebar(container, categories) {
                     targetIndex,
                     currentDragLevel,
                 );
-                updateDataCurrentCategories(newList);
                 renderContainerSidebar(newList);
             }
         });

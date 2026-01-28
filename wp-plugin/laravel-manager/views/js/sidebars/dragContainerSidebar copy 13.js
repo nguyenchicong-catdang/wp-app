@@ -1,5 +1,5 @@
 import { renderContainerSidebar } from "./renderContainerSidebar.js";
-import { updateDataCurrentCategories } from "./dataLoaderSidebar.js";
+
 const levelColors = [
     "#dee2e6",
     "#007bff",
@@ -16,52 +16,40 @@ function dragContainerSidebar(container, categories) {
 
     container.querySelectorAll(".draggable-item").forEach((item) => {
         item.addEventListener("dragstart", (e) => {
-            draggedItemIndex = item.getAttribute("data-index");
-            startX = e.clientX; // Ghi lại tọa độ X tuyệt đối của chuột
-
+            // Tạo một phần tử ảo để làm ghost image
             const ghost = item.cloneNode(true);
-            ghost.style.backgroundColor = "#28a745";
+            ghost.style.backgroundColor = "#28a745"; // Màu xanh lá cho vật đang kéo
             ghost.style.width = item.offsetWidth + "px";
-            ghost.style.opacity = "0.7";
             ghost.style.position = "absolute";
             ghost.style.paddingLeft = "0px";
+            // ghost.style.top = "-1000px"; // Giấu nó đi
             document.body.appendChild(ghost);
 
-            // Điểm neo của ghost trùng với vị trí chuột lúc click để offsetX tính từ 0 chuẩn nhất
-            // e.dataTransfer.setDragImage(ghost, e.offsetX, e.offsetY);
-                        e.dataTransfer.setDragImage(
-                            ghost,
-                            e.offsetX,
-                            e.offsetY,
-                        );
-
-                        
-            e.dataTransfer.setData("text/plain", draggedItemIndex);
+            // Yêu cầu trình duyệt dùng ghost này làm ảnh kéo
+            e.dataTransfer.setDragImage(ghost, 0, 0);
 
             setTimeout(() => {
+                draggedItemIndex = item.getAttribute("data-index");
+                startX = e.clientX;
                 item.classList.add("dragstart");
-                if (document.body.contains(ghost))
-                    document.body.removeChild(ghost);
+                item.style.paddingLeft = "0px";
+                document.body.removeChild(ghost); // Dọn dẹp sau khi chụp
             }, 0);
         });
 
         item.addEventListener("dragover", (e) => {
             e.preventDefault();
-
-            // Tính offsetX chuẩn xác hơn
             const offsetX = e.clientX - startX;
-
-            // TĂNG ĐỘ NHẠY: Chỉ cần nhích 10px là đã muốn lên level 1
-            // Công thức: (giá trị thực + khoảng ưu tiên) / bước nhảy
             currentDragLevel = Math.max(
                 0,
-                Math.min(Math.round((offsetX) / 30), 5),
+                Math.min(Math.floor(offsetX / 30), 5),
             );
 
             item.classList.add("dragover");
+
             const activeColor = levelColors[currentDragLevel];
 
-            // Cập nhật Visual ngay lập tức
+            // Cập nhật Visual feedback
             item.style.paddingLeft = "0px";
             item.style.borderLeft = `${currentDragLevel * 30}px solid ${activeColor}`;
             item.style.borderTop = `2px solid ${activeColor}`;
@@ -89,7 +77,6 @@ function dragContainerSidebar(container, categories) {
                     targetIndex,
                     currentDragLevel,
                 );
-                updateDataCurrentCategories(newList);
                 renderContainerSidebar(newList);
             }
         });

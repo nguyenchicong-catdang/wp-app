@@ -1,5 +1,6 @@
 // laravel-manager/views/js/sidebars/editLaravelSidebar.js
 import { renderContainerSidebar } from "./renderContainerSidebar.js";
+import { updateDataCurrentCategories } from "./dataLoaderSidebar.js";
 function editLaravelSidebar() {
     const btnEditSidebar = document.getElementById("btnEditSidebar");
     const rootLaravelSidebar = document.getElementById("rootLaravelSidebar");
@@ -40,7 +41,8 @@ function editLaravelSidebar() {
                 btnEditSidebar.style.backgroundColor = "";
                 btnEditSidebar.style.color = "";
 
-                console.log("Dữ liệu đã lưu:", selectedIds);
+                // console.log("Dữ liệu đã lưu:", selectedIds);
+                updateDataCurrentCategories(selectedIds);
                 renderContainerSidebar(selectedIds);
             }
         });

@@ -1,13 +1,4 @@
 import { renderContainerSidebar } from "./renderContainerSidebar.js";
-import { updateDataCurrentCategories } from "./dataLoaderSidebar.js";
-const levelColors = [
-    "#dee2e6",
-    "#007bff",
-    "#28a745",
-    "#ffc107",
-    "#fd7e14",
-    "#dc3545",
-];
 
 function dragContainerSidebar(container, categories) {
     let draggedItemIndex = null;
@@ -17,61 +8,39 @@ function dragContainerSidebar(container, categories) {
     container.querySelectorAll(".draggable-item").forEach((item) => {
         item.addEventListener("dragstart", (e) => {
             draggedItemIndex = item.getAttribute("data-index");
-            startX = e.clientX; // Ghi lại tọa độ X tuyệt đối của chuột
+            startX = e.clientX;
 
-            const ghost = item.cloneNode(true);
-            ghost.style.backgroundColor = "#28a745";
-            ghost.style.width = item.offsetWidth + "px";
-            ghost.style.opacity = "0.7";
-            ghost.style.position = "absolute";
-            ghost.style.paddingLeft = "0px";
-            document.body.appendChild(ghost);
+            item.classList.add("dragstart");
 
-            // Điểm neo của ghost trùng với vị trí chuột lúc click để offsetX tính từ 0 chuẩn nhất
-            // e.dataTransfer.setDragImage(ghost, e.offsetX, e.offsetY);
-                        e.dataTransfer.setDragImage(
-                            ghost,
-                            e.offsetX,
-                            e.offsetY,
-                        );
-
-                        
-            e.dataTransfer.setData("text/plain", draggedItemIndex);
-
-            setTimeout(() => {
-                item.classList.add("dragstart");
-                if (document.body.contains(ghost))
-                    document.body.removeChild(ghost);
-            }, 0);
+            // RESET: Khi nắm lên, ép padding về 0 ngay lập tức
+            item.style.paddingLeft = "0px";
+            item.setAttribute("data-level", "0");
         });
 
         item.addEventListener("dragover", (e) => {
             e.preventDefault();
 
-            // Tính offsetX chuẩn xác hơn
+            // Tính toán level hoàn toàn mới dựa trên độ lệch chuột từ vị trí bắt đầu
             const offsetX = e.clientX - startX;
-
-            // TĂNG ĐỘ NHẠY: Chỉ cần nhích 10px là đã muốn lên level 1
-            // Công thức: (giá trị thực + khoảng ưu tiên) / bước nhảy
+            // Mỗi 30px dịch sang phải = tăng 1 level
             currentDragLevel = Math.max(
                 0,
-                Math.min(Math.round((offsetX) / 30), 5),
+                Math.min(Math.floor(offsetX / 30), 5),
             );
 
             item.classList.add("dragover");
-            const activeColor = levelColors[currentDragLevel];
 
-            // Cập nhật Visual ngay lập tức
+            // RESET VẬT BỊ OVER: Để vật mục tiêu không gây nhiễu, ta ép padding nó về 0
+            // và dùng border-left để hiển thị level dự kiến sẽ chèn vào
             item.style.paddingLeft = "0px";
-            item.style.borderLeft = `${currentDragLevel * 30}px solid ${activeColor}`;
-            item.style.borderTop = `2px solid ${activeColor}`;
+            item.style.borderLeft = `${currentDragLevel * 30}px solid #007bff`;
         });
 
         item.addEventListener("dragleave", (e) => {
             item.classList.remove("dragover");
             item.style.borderLeft = "";
-            item.style.borderTop = ""; // Reset border top
 
+            // KHÔI PHỤC: Trả lại padding đúng của item mục tiêu khi chuột rời đi
             const idx = item.getAttribute("data-index");
             const originalLevel = categories[idx].level || 0;
             item.style.paddingLeft = `${originalLevel * 30}px`;
@@ -83,13 +52,13 @@ function dragContainerSidebar(container, categories) {
             const fromIndex = parseInt(draggedItemIndex);
 
             if (fromIndex !== null && !isNaN(fromIndex)) {
+                // Thả ra với level mới đã tính toán (mặc định bắt đầu từ 0 + offset)
                 const newList = updateOrderAndLevel(
                     categories,
                     fromIndex,
                     targetIndex,
                     currentDragLevel,
                 );
-                updateDataCurrentCategories(newList);
                 renderContainerSidebar(newList);
             }
         });
@@ -98,7 +67,7 @@ function dragContainerSidebar(container, categories) {
             container.querySelectorAll(".draggable-item").forEach((el) => {
                 el.classList.remove("dragstart", "dragover");
                 el.style.borderLeft = "";
-                el.style.borderTop = "";
+                // Render sẽ lo việc đặt lại padding đúng, nhưng dọn dẹp ở đây cho chắc chắn
             });
         });
     });

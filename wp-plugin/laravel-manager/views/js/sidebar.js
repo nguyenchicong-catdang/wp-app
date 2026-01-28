@@ -1,7 +1,9 @@
 // laravel-manager/views/js/sidebar.js
-import { renderSidebar } from "./sidebars/renderSidebar.js";
-import { renderCategoryRows } from "./sidebars/renderCategoryRows.js";
+import { renderRootLaravelSidebar } from "./sidebars/renderRootLaravelSidebar.js";
+import { renderCategoryTableBody } from "./sidebars/renderCategoryTableBody.js";
 import { editLaravelSidebar } from "./sidebars/editLaravelSidebar.js";
+import { updateLaravelSidebar } from "./sidebars/updateLaravelSidebar.js";
+import { renderContainerSidebar } from "./sidebars/renderContainerSidebar.js";
 // import { editLaravelSidebar } from "./sidebars/editLaravelSidebar.js";
 // import { categoryBuildTree } from "./sidebars/categoryBuildTree.js";
 // import { renderCategoryRows } from "./sidebars/renderCategoryRows.js";
@@ -15,7 +17,9 @@ import { editLaravelSidebar } from "./sidebars/editLaravelSidebar.js";
 // }
 document.addEventListener("DOMContentLoaded", () => {
     // Chạy các hàm khởi tạo bên trong này
-    renderSidebar();
-    renderCategoryRows();
+    renderRootLaravelSidebar();
+    renderCategoryTableBody();
+    renderContainerSidebar();
     editLaravelSidebar();
+    updateLaravelSidebar();
 });

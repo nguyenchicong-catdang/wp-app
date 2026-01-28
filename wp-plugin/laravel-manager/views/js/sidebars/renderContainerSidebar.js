@@ -1,9 +1,10 @@
 // laravel-manager/views/js/sidebars/renderContainerSidebar.js
 import { dragContainerSidebar } from "./dragContainerSidebar.js";
-function renderContainerSidebar(categories) {
+import { dataCurrentCategories } from "./dataLoaderSidebar.js";
+function renderContainerSidebar(categories = dataCurrentCategories) {
     const containerSidebar = document.getElementById("containerSidebar");
     if (!containerSidebar) return;
-
+    // console.log(categories);
     // Nếu không có category nào được chọn, xóa trắng container hoặc hiện thông báo
     if (!categories || categories.length === 0) {
         containerSidebar.innerHTML = "<p>Chưa có danh mục nào được chọn.</p>";
@@ -22,13 +23,15 @@ function renderContainerSidebar(categories) {
 
     const htmlItems = categories
         .map((cat, index) => {
+            // Mỗi level thụt lề 30px
+            const padding = cat.level * 30;
             return /* html */ `
             <div class="draggable-item" 
                  draggable="true" 
                  data-index="${index}" 
-                 style="--indent-level: ${cat.level};"
-                 >
-                <h4 style="margin: 5px;"> ☰ ${cat.name}</h4>
+                 data-level="${cat.level}" 
+                 style="padding-left: ${padding}px">
+                ${cat.level > 0 ? "↳ " : ""} ${cat.name}
             </div>
         `;
         })

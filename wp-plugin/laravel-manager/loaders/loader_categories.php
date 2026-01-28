@@ -16,6 +16,7 @@ foreach($categories as $cat) {
 }
 
 // Gửi sang JS dưới tên biến window.laravelData
-wp_localize_script('asset_laravel_sidebar_script', 'categoriesData', [
-    'categories' => $data
+wp_localize_script('asset_laravel_sidebar_script', 'dataCategories', [
+    'categories' => $data,
+    'nonce' => wp_create_nonce('action_update_laravel_sidebar_nonce')
 ]);
